@@ -59,6 +59,21 @@ def hole_entry(request, round_id, hole_number):
         else:
             return redirect("round_detail", round_id=round_id)
 
+    if not hole.putts.exists():
+        initial_putts = [
+            {"putt_number": 1},
+            {"putt_number": 2},
+            {"putt_number": 3},
+        ]
+    else:
+        initial_putts = None
+
+    formset = PuttFormSet(
+        request.POST or None,
+        instance=hole,
+        initial=initial_putts
+    )
+
     return render(
         request,
         "rounds/hole_entry.html",

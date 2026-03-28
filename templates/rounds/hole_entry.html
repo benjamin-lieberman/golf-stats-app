@@ -9,35 +9,70 @@
 <form method="post">
     {% csrf_token %}
 
-    <h4>Hole Info</h4>
-    {{ form.as_p }}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>Hole Info</h5>
 
-    <h4>Putts</h4>
+            <div class="mb-2">
+                <label>Par</label>
+                {{ form.par }}
+            </div>
 
-    {{ formset.management_form }}
+            <div class="mb-2">
+                <label>Distance (yards)</label>
+                {{ form.distance_in_yards }}
+            </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Distance (ft)</th>
-                <th>Made</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for f in formset %}
-            <tr>
-                <td>{{ f.putt_number }}</td>
-                <td>{{ f.distance_ft }}</td>
-                <td>{{ f.made }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <div class="mb-2 form-check">
+                {{ form.gir_hit }}
+                <label class="form-check-label">GIR Hit</label>
+            </div>
 
-    <button type="submit" class="btn btn-success">
-        Save & Next
-    </button>
+            <div class="mb-2">
+                <label>Pin Position</label>
+                {{ form.pin_position }}
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>Putts</h5>
+
+            {{ formset.management_form }}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Distance</th>
+                        <th>Made</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in formset %}
+                    <tr>
+                        <td>{{ f.putt_number }}</td>
+                        <td>{{ f.distance_ft }}</td>
+                        <td>{{ f.made }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        {% if hole.hole_number > 1 %}
+        <a href="{% url 'hole_entry' round.id hole.hole_number|add:'-1' %}" class="btn btn-secondary">
+            Previous
+        </a>
+        {% endif %}
+
+        <button type="submit" class="btn btn-success">
+            Save & Next
+        </button>
+    </div>
 
 </form>
 
