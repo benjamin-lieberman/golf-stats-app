@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>
+    {{ round.course_name }} — Hole {{ hole.hole_number }}
+</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <h4>Hole Info</h4>
+    {{ form.as_p }}
+
+    <h4>Putts</h4>
+
+    {{ formset.management_form }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Distance (ft)</th>
+                <th>Made</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in formset %}
+            <tr>
+                <td>{{ f.putt_number }}</td>
+                <td>{{ f.distance_ft }}</td>
+                <td>{{ f.made }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">
+        Save & Next
+    </button>
+
+</form>
+
+{% endblock %}

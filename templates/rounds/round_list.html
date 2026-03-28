@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Rounds</h2>
+<a href="/new/" class="btn btn-primary">New Round</a>
+<ul>
+{% for r in rounds %}
+<li><a href="/{{r.id}}/">{{r.course_name}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
